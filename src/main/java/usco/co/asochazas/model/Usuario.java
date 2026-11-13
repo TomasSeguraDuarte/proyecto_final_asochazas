@@ -20,16 +20,16 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column (nullable = false)
+	@Column (nullable = false, length = 100)
 	private String nombre;
 	
-	@Column (nullable = false, unique = true)
+	@Column (nullable = false, unique = true, length = 150)
 	private String correo;
 	
-	@Column (nullable = false)
+	@Column (nullable = false, length = 225)
 	private String password;
 	
-	@Column 
+	@Column (length = 50)
 	private String contacto;
 
 	@Column(name = "fecha_registro",  updatable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

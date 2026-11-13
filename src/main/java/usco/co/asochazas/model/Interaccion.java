@@ -20,15 +20,15 @@ public class Interaccion {
 	private long id;
 	
 	@Column
-	private int cantidad;
+	private Integer cantidad;
 	
 	@Column(name = "precio_unitario")
-	private int precio_unitario;
+	private Integer precio_unitario;
 	
 	@Column(name = "fecha_contacto",  updatable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime fecha_contacto;
 	
-	@Column(name = "fecha_resolucion",  updatable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(name = "fecha_resolucion", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime fecha_resolucion;
 	
     @ManyToOne(fetch = FetchType.EAGER)
