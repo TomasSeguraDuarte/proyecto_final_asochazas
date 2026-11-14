@@ -15,5 +15,5 @@ public class EstadoProducto {
 	private long id;
 	
 	@Column(nullable = false, unique = true, length =30)
-	private String nombre_estado;
+	private String estadoProducto;
 }

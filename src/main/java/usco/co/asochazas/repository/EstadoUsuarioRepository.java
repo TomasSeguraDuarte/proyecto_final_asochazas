@@ -7,5 +7,5 @@ import usco.co.asochazas.model.EstadoUsuario;
 
 @Repository
 public interface EstadoUsuarioRepository extends JpaRepository<EstadoUsuario,Long>{
-
+	EstadoUsuario findByEstadoUsuario(String estadoUsuario);
 }

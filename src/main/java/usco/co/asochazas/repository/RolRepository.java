@@ -7,4 +7,5 @@ import usco.co.asochazas.model.Rol;
 
 @Repository
 public interface RolRepository extends JpaRepository<Rol,Long>{
+	Rol findByRol(String rol);
 }
