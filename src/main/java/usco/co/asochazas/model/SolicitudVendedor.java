@@ -34,10 +34,10 @@ public class SolicitudVendedor {
 	
 	@Column(nullable = false, length = 1000)
 	private String propuesta_descripcion;
-	
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario_id;
+    private Usuario usuario;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "revisado_por")

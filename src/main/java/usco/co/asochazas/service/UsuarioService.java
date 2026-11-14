@@ -1,5 +1,6 @@
 package usco.co.asochazas.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class UsuarioService {
 		if(usuarioRepository.existsByCorreo(correo)) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Correo ya registrado");
 		}
+		usuario.setFecha_registro(LocalDateTime.now());
 		usuario.setCorreo(correo);
 		usuario.setNombre(nombre);
 		usuario.setPassword(passwordEncoder.encode(password));
