@@ -8,4 +8,6 @@ import usco.co.asochazas.model.EstadoProducto;
 @Repository
 public interface EstadoProductoRepository extends JpaRepository<EstadoProducto,Long>{
 
+	EstadoProducto findByEstadoProducto(String estado);
+
 }

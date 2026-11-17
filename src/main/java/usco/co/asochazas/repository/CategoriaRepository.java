@@ -7,5 +7,5 @@ import usco.co.asochazas.model.Categoria;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria,Long>{
-
+	Categoria findByCategoria(String categoria);
 }

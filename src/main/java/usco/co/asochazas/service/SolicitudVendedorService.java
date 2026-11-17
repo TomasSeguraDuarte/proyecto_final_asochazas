@@ -40,6 +40,18 @@ public class SolicitudVendedorService {
 		}
 		Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow();
 		
+		if(usuario.getEstado().getEstadoUsuario().equals("SUSPENDIDO")) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "El ususario se encuentra suspendido");
+		}
+		
+		if(usuario.getRol().getRol().equals("VENDEDOR")) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "El ususario ya posee el rol vendedor");
+		}
+	
+		if(usuario.getRol().getRol().equals("ADMIN")) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "El ususario es un administrador");
+		}
+		
 		if (solicitudRepository.existsByUsuarioIdAndEstado_EstadoSolicitud(usuarioId, "PENDIENTE")) {
 	        throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una solicitud pendiente para este usuario");
 	    }
