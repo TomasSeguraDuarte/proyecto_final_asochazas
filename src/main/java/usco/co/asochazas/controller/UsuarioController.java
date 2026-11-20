@@ -2,9 +2,11 @@ package usco.co.asochazas.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import usco.co.asochazas.model.Usuario;
+import usco.co.asochazas.security.CustomUserDetails;
 import usco.co.asochazas.service.UsuarioService;
 
 @RestController
@@ -22,14 +24,19 @@ public class UsuarioController {
         return usuarioService.createUsuario(request.nombre(), request.password(), request.correo());
     }
 
-    @PutMapping("/{id}")
-    public Usuario editarPerfil(@PathVariable Long id, @RequestBody EditarPerfilRequest request) {
-        return usuarioService.editPerfil(id, request.nombre(), request.contacto());
+    @PutMapping("/perfil")
+    public Usuario editarMiPerfil(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @RequestBody EditarPerfilRequest request) {
+        return usuarioService.editPerfil(user.getId(), request.nombre(), request.contacto());
     }
 
     @PutMapping("/{id}/suspender")
-    public Usuario suspender(@PathVariable Long id, @RequestBody SuspensionRequest request) {
-        return usuarioService.suspenderUsuario(id, request.justificacion());
+    public Usuario suspender(
+            @PathVariable Long id,
+            @AuthenticationPrincipal CustomUserDetails admin,
+            @RequestBody JustificacionRequest request) {
+        return usuarioService.suspenderUsuario(id, admin.getId(), request.justificacion());
     }
 
     @PutMapping("/{id}/reactivar")
@@ -37,12 +44,24 @@ public class UsuarioController {
         return usuarioService.reactivarUsuario(id);
     }
 
+    @PutMapping("/{id}/revocar-vendedor")
+    public Usuario revocarVendedor(
+            @PathVariable Long id,
+            @RequestBody JustificacionRequest request) {
+        return usuarioService.revocarRolVendedor(id, request.justificacion());
+    }
+
     @GetMapping
     public List<Usuario> listar() {
         return usuarioService.listarUsuarios();
     }
+    
+    @PutMapping("/{id}/promover-admin")
+    public Usuario promoverAdmin(@PathVariable Long id) {
+        return usuarioService.promoverAdmin(id);
+    }
 
     public record RegistroRequest(String nombre, String password, String correo) {}
     public record EditarPerfilRequest(String nombre, String contacto) {}
-    public record SuspensionRequest(String justificacion) {}
+    public record JustificacionRequest(String justificacion) {}
 }

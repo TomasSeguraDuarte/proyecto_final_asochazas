@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsoChazas USCO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="navbar-container"></div>
+
+<main class="container">
+    <div class="card auth-card p-4 bg-white">
+        <div class="text-center mb-3">
+            <i class="bi bi-person-plus-fill fs-1" style="color: var(--usco-vinotinto);"></i>
+            <h3 class="fw-bold mt-2" data-i18n="register.title">Crear Cuenta</h3>
+            <p class="text-muted small" data-i18n="register.subtitle">Exclusivo para estudiantes de la Universidad Surcolombiana</p>
+        </div>
+
+        <div id="alert-register"></div>
+
+        <form id="form-register">
+            <div class="mb-3">
+                <label class="form-label fw-semibold" data-i18n="register.name">Nombre completo</label>
+                <input type="text" id="nombre" class="form-control" data-i18n-placeholder="register.name_placeholder" placeholder="Ej. Laura Gómez" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold" data-i18n="register.email">Correo institucional (@usco.edu.co)</label>
+                <input type="email" id="correo" class="form-control" placeholder="u2024123456@usco.edu.co" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold" data-i18n="register.password">Contraseña</label>
+                <input type="password" id="password" class="form-control" required>
+            </div>
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-usco" data-i18n="register.submit">Registrarme</button>
+            </div>
+        </form>
+
+        <div class="text-center small">
+            <span data-i18n="register.has_account">¿Ya tienes cuenta?</span>
+            <a href="/login.html" class="fw-bold" style="color: var(--usco-vinotinto);" data-i18n="register.login_link">Inicia sesión</a>
+        </div>
+    </div>
+</main>
+
+<footer class="py-3 text-center small">
+    <div class="container" data-i18n="footer.text">AsoChazas USCO &copy; 2026 - Universidad Surcolombiana</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/i18n.js"></script>
+<script src="/js/api.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        await initI18n();
+        renderNavbar("register");
+    });
+
+    document.getElementById("form-register").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById("nombre").value.trim();
+        const correo = document.getElementById("correo").value.trim();
+        const password = document.getElementById("password").value;
+
+        try {
+            await apiFetch("/usuarios", {
+                method: "POST",
+                body: JSON.stringify({ nombre, correo, password })
+            });
+            showAlert("alert-register", t("register.success"), "success");
+            setTimeout(() => window.location.href = "/login.html", 1500);
+        } catch (err) {
+            showAlert("alert-register", err.message, "danger");
+        }
+    });
+</script>
+</body>
+</html>

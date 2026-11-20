@@ -2,11 +2,11 @@ package usco.co.asochazas.controller;
 
 import java.util.List;
 
-import java.util.Optional;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import usco.co.asochazas.model.SolicitudVendedor;
+import usco.co.asochazas.security.CustomUserDetails;
 import usco.co.asochazas.service.SolicitudVendedorService;
 
 @RestController
@@ -20,13 +20,15 @@ public class SolicitudVendedorController {
     }
 
     @PostMapping
-    public SolicitudVendedor enviar(@RequestBody EnviarSolicitudRequest request) {
-        return solicitudService.enviarSolicitud(request.usuarioId(), request.propuestaNombre(), request.propuestaDescripcion());
+    public SolicitudVendedor enviar(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @RequestBody EnviarSolicitudRequest request) {
+        return solicitudService.enviarSolicitud(user.getId(), request.propuestaNombre(), request.propuestaDescripcion());
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public Optional<SolicitudVendedor> consultarMia(@PathVariable Long usuarioId) {
-        return solicitudService.consultarSolicitud(usuarioId);
+    @GetMapping("/mi-solicitud")
+    public SolicitudVendedor consultarMia(@AuthenticationPrincipal CustomUserDetails user) {
+        return solicitudService.consultarSolicitud(user.getId());
     }
 
     @GetMapping("/pendientes")
@@ -35,16 +37,20 @@ public class SolicitudVendedorController {
     }
 
     @PutMapping("/{solicitudId}/aprobar")
-    public SolicitudVendedor aprobar(@PathVariable Long solicitudId, @RequestBody AdminRequest request) {
-        return solicitudService.aprobarSolicitud(solicitudId, request.adminId());
+    public SolicitudVendedor aprobar(
+            @PathVariable Long solicitudId,
+            @AuthenticationPrincipal CustomUserDetails admin) {
+        return solicitudService.aprobarSolicitud(solicitudId, admin.getId());
     }
 
     @PutMapping("/{solicitudId}/rechazar")
-    public SolicitudVendedor rechazar(@PathVariable Long solicitudId, @RequestBody RechazarRequest request) {
-        return solicitudService.rechazarSolicitud(solicitudId, request.adminId(), request.justificacion());
+    public SolicitudVendedor rechazar(
+            @PathVariable Long solicitudId,
+            @AuthenticationPrincipal CustomUserDetails admin,
+            @RequestBody RechazarRequest request) {
+        return solicitudService.rechazarSolicitud(solicitudId, admin.getId(), request.justificacion());
     }
 
-    public record EnviarSolicitudRequest(Long usuarioId, String propuestaNombre, String propuestaDescripcion) {}
-    public record AdminRequest(Long adminId) {}
-    public record RechazarRequest(Long adminId, String justificacion) {}
+    public record EnviarSolicitudRequest(String propuestaNombre, String propuestaDescripcion) {}
+    public record RechazarRequest(String justificacion) {}
 }

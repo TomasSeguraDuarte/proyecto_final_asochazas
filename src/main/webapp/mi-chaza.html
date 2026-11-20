@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsoChazas USCO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="navbar-container"></div>
+
+<main class="container my-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h2 class="fw-bold mb-0" style="color: var(--usco-vinotinto);">
+            <i class="bi bi-shop me-2"></i><span data-i18n="mychaza.title">Gestión de Mi Chaza</span>
+        </h2>
+        <a id="link-vista-publica" href="#" class="btn btn-sm btn-outline-usco">
+            <i class="bi bi-eye me-1"></i><span data-i18n="mychaza.public_view">Ver mi chaza pública</span>
+        </a>
+    </div>
+
+    <div id="alert-chaza-panel"></div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center p-3">
+                <small class="text-muted" data-i18n="mychaza.stat_active">Productos Activos</small>
+                <div class="fs-4 fw-bold" style="color: var(--usco-vinotinto);" id="stat-activos">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center p-3">
+                <small class="text-muted" data-i18n="mychaza.stat_stock">Unidades en Stock</small>
+                <div class="fs-4 fw-bold" id="stat-stock">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center p-3">
+                <small class="text-muted" data-i18n="mychaza.stat_pending">Pedidos Pendientes</small>
+                <div class="fs-4 fw-bold text-warning" id="stat-pendientes">0</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center p-3">
+                <small class="text-muted" data-i18n="mychaza.stat_confirmed">Ventas Confirmadas</small>
+                <div class="fs-4 fw-bold text-success" id="stat-confirmadas">0</div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-productos" type="button">
+                <i class="bi bi-box-seam me-1"></i><span data-i18n="mychaza.tab_products">Mis Productos</span>
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ventas" type="button">
+                <i class="bi bi-cash-coin me-1"></i><span data-i18n="mychaza.tab_sales">Pedidos Recibidos</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-productos">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3" data-i18n="prod.new_title">Publicar Nuevo Producto</h5>
+                            <form id="form-crear-producto">
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold" data-i18n="prod.name">Nombre</label>
+                                    <input type="text" id="prod-nombre" class="form-control" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label small fw-semibold" data-i18n="prod.category">Categoría</label>
+                                    <select id="prod-categoria" class="form-select" required>
+                                        <option value="Comida" data-i18n="cat.Comida">Comida</option>
+                                        <option value="Tecnología" data-i18n="cat.Tecnología">Tecnología</option>
+                                        <option value="Ropa" data-i18n="cat.Ropa">Ropa</option>
+                                        <option value="Accesorios" data-i18n="cat.Accesorios">Accesorios</option>
+                                        <option value="Papelería" data-i18n="cat.Papelería">Papelería</option>
+                                        <option value="Servicios" data-i18n="cat.Servicios">Servicios</option>
+                                        <option value="Otros" data-i18n="cat.Otros">Otros</option>
+                                    </select>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold" data-i18n="prod.price">Precio (COP)</label>
+                                        <input type="number" id="prod-precio" class="form-control" min="1" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small fw-semibold" data-i18n="prod.stock">Stock inicial</label>
+                                        <input type="number" id="prod-stock" class="form-control" min="1" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold" data-i18n="prod.desc">Descripción</label>
+                                    <textarea id="prod-descripcion" class="form-control" rows="2" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-usco w-100" data-i18n="prod.publish_btn">Publicar Producto</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3" data-i18n="prod.inventory_title">Mi Inventario</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th data-i18n="th.product">Producto</th>
+                                            <th data-i18n="th.category">Categoría</th>
+                                            <th data-i18n="th.price">Precio</th>
+                                            <th data-i18n="th.stock">Stock</th>
+                                            <th data-i18n="th.status">Estado</th>
+                                            <th data-i18n="th.actions">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-mis-productos"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab-ventas">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3" data-i18n="sales.title">Solicitudes de Compra Recibidas</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th data-i18n="th.product">Producto</th>
+                                    <th data-i18n="th.buyer">Comprador</th>
+                                    <th data-i18n="th.qty">Cant.</th>
+                                    <th data-i18n="th.total">Total</th>
+                                    <th data-i18n="th.status">Estado</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ventas-recibidas"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal Editar Producto -->
+<div class="modal fade" id="modalEditarProducto" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: var(--usco-vinotinto); color: white;">
+                <h5 class="modal-title" data-i18n="prod.edit_title">Editar Producto</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-editar-producto">
+                    <input type="hidden" id="edit-prod-id">
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold" data-i18n="prod.name">Nombre</label>
+                        <input type="text" id="edit-prod-nombre" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold" data-i18n="prod.category">Categoría</label>
+                        <select id="edit-prod-categoria" class="form-select">
+                            <option value="Comida" data-i18n="cat.Comida">Comida</option>
+                            <option value="Tecnología" data-i18n="cat.Tecnología">Tecnología</option>
+                            <option value="Ropa" data-i18n="cat.Ropa">Ropa</option>
+                            <option value="Accesorios" data-i18n="cat.Accesorios">Accesorios</option>
+                            <option value="Papelería" data-i18n="cat.Papelería">Papelería</option>
+                            <option value="Servicios" data-i18n="cat.Servicios">Servicios</option>
+                            <option value="Otros" data-i18n="cat.Otros">Otros</option>
+                        </select>
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold" data-i18n="prod.price">Precio</label>
+                            <input type="number" id="edit-prod-precio" class="form-control" min="1">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold" data-i18n="prod.stock">Stock</label>
+                            <input type="number" id="edit-prod-stock" class="form-control" min="0">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold" data-i18n="th.status">Estado</label>
+                        <select id="edit-prod-estado" class="form-select">
+                            <option value="ACTIVO" data-i18n="status.ACTIVO">ACTIVO</option>
+                            <option value="PAUSADO" data-i18n="status.PAUSADO">PAUSADO</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" data-i18n="prod.desc">Descripción</label>
+                        <textarea id="edit-prod-descripcion" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-usco w-100" data-i18n="prod.update_btn">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="py-3 text-center small">
+    <div class="container" data-i18n="footer.text">AsoChazas USCO &copy; 2026 - Universidad Surcolombiana</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/i18n.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/mi-chaza.js"></script>
+</body>
+</html>

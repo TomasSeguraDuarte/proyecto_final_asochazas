@@ -28,20 +28,17 @@ public class Producto {
 	@Column(nullable = false)
 	private int precio;
 	
-	@Column(length = 255)
-	private String imagen;
-	
 	@Column(nullable = false)
 	private int stock;
 	
 	@Column(name = "fecha_publicacion",  updatable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime fecha_publicacion;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendedor_id", nullable = false)
     private Usuario vendedor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 

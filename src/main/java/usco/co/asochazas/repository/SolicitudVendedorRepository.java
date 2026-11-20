@@ -11,11 +11,8 @@ import usco.co.asochazas.model.SolicitudVendedor;
 
 
 @Repository
-public interface SolicitudVendedorRepository extends JpaRepository<SolicitudVendedor,Long>{
-
-    Optional<SolicitudVendedor> findByUsuarioId(Long usuarioId);
-
-    boolean existsByUsuarioIdAndEstado_EstadoSolicitud(Long usuarioId, String estadoSolicitud);
-
+public interface SolicitudVendedorRepository extends JpaRepository<SolicitudVendedor, Long> {
+    Optional<SolicitudVendedor> findFirstByUsuario_IdOrderByIdDesc(Long usuarioId);
+    boolean existsByUsuario_IdAndEstado_EstadoSolicitud(Long usuarioId, String estadoSolicitud);
     List<SolicitudVendedor> findByEstado_EstadoSolicitud(String estadoSolicitud);
 }

@@ -39,7 +39,7 @@ public class Interaccion {
     @JoinColumn(name = "comprador_id", nullable = false)
     private Usuario usuario;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estado_id", nullable = false)
     private EstadoInteraccion estado;
     

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsoChazas USCO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="navbar-container"></div>
+
+<header class="hero-usco py-4 mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge badge-dorado mb-2" data-i18n="hero.badge">Universidad Surcolombiana</span>
+                <h1 class="h2 fw-bold mb-1" data-i18n="hero.title">Marketplace Estudiantil AsoChazas</h1>
+                <p class="mb-0 text-white-50" data-i18n="hero.subtitle">Compra, vende y apoya los emprendimientos dentro del campus universitario.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container mb-5">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <form id="form-filtros" class="row g-2 align-items-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" id="input-busqueda" class="form-control" data-i18n-placeholder="filter.search_placeholder" placeholder="Buscar empanadas, calculadoras, accesorios...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select id="select-categoria" class="form-select">
+                        <option value="" data-i18n="filter.all_categories">Todas las categorías</option>
+                        <option value="Comida" data-i18n="cat.Comida">Comida</option>
+                        <option value="Tecnología" data-i18n="cat.Tecnología">Tecnología</option>
+                        <option value="Ropa" data-i18n="cat.Ropa">Ropa</option>
+                        <option value="Accesorios" data-i18n="cat.Accesorios">Accesorios</option>
+                        <option value="Papelería" data-i18n="cat.Papelería">Papelería</option>
+                        <option value="Servicios" data-i18n="cat.Servicios">Servicios</option>
+                        <option value="Otros" data-i18n="cat.Otros">Otros</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-usco" data-i18n="filter.btn">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="alert-catalogo"></div>
+
+    <div id="grid-productos" class="row g-4">
+        <div class="text-center py-5 text-muted" data-i18n="catalog.loading">Cargando productos...</div>
+    </div>
+</main>
+
+<footer class="py-3 text-center small">
+    <div class="container" data-i18n="footer.text">AsoChazas USCO &copy; 2026 - Universidad Surcolombiana</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/i18n.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>

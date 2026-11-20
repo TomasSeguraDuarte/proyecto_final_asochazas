@@ -43,7 +43,7 @@ public class SolicitudVendedor {
     @JoinColumn(name = "revisado_por")
     private Usuario revisado_por = null;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estado_solicitud", nullable=false)
     private EstadoSolicitud estado;
 }
